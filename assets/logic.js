@@ -6,3 +6,8 @@ function onTouch(event) {
     if (mainPage.clicksAmount === 20)
         mainImage.imageSource = "asset:///images/third.png";
 }
+
+function restart() {
+    mainPage.clicksAmount = 0;
+    mainImage.imageSource = "asset:///images/first.png";  
+}
