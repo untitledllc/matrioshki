@@ -17,40 +17,40 @@ Page {
             text: clicksAmount.toString()
         }
         ImageView {
-                    id: mainImage
-                    imageSource: "asset:///images/first.png"
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1.0
+            id: mainImage
+            imageSource: "asset:///images/first.png"
+            layoutProperties: StackLayoutProperties {
+                spaceQuota: 1.0
+            }
+            verticalAlignment: VerticalAlignment.Center
+            horizontalAlignment: HorizontalAlignment.Center
+            scalingMethod: ScalingMethod.AspectFit
+            onTouch: {
+                Logic.onTouch(event);
+                sequential.play();
+            }
+            animations: [
+                SequentialAnimation {
+                    id: sequential
+                    RotateTransition {
+                        toAngleZ: 10
+                        duration: 20
                     }
-                    verticalAlignment: VerticalAlignment.Center
-                    horizontalAlignment: HorizontalAlignment.Center
-                    scalingMethod: ScalingMethod.AspectFit
-                    onTouch: {
-                        Logic.onTouch(event);
-                        sequential.play();
+                    RotateTransition {
+                        toAngleZ: 0
+                        duration: 20
                     }
-                    animations: [
-                        SequentialAnimation {
-                            id: sequential
-                            RotateTransition {
-                                toAngleZ: 10
-                                duration: 20
-                            }
-                            RotateTransition {
-                                toAngleZ: 0
-                                duration: 20
-                            }
-                            RotateTransition {
-                                toAngleZ: -10
-                                duration: 20
-                            }
-                            RotateTransition {
-                                toAngleZ: 0
-                                duration: 20
-                            }
-                        }
-                    ]
+                    RotateTransition {
+                        toAngleZ: -10
+                        duration: 20
+                    }
+                    RotateTransition {
+                        toAngleZ: 0
+                        duration: 20
+                    }
                 }
+            ]
+        }
         Container {
             id: clippedImage
             visible: false
@@ -58,51 +58,66 @@ Page {
             verticalAlignment: VerticalAlignment.Center
             animations: [
                 ParallelAnimation {
-                    id: parallelAnimation
+                    id: parallelAnimation_top
+                    target: mainImage_top
                     onEnded: {                 
                         Logic.setupAnimationForSecondImage();
                     }
-                    ParallelAnimation {
-                        target: mainImage_top
-                        RotateTransition {
-                            toAngleZ: -70
-                            duration: 500
-                        }
-                        TranslateTransition {
-                            duration: 500
-                            toX: -1000
-                            toY: -1000
-                        }
-                        FadeTransition {
-                            duration: 500
-                            fromOpacity: 1.0
-                            toOpacity: 0
-                        }
+                    RotateTransition {
+                        toAngleZ: -70
+                        duration: 500
                     }
-                    ParallelAnimation {
-                        target: mainImage_bottom
-                        RotateTransition {
-                            toAngleZ: -270
-                            duration: 500
-                        }
-                        TranslateTransition {
-                            duration: 500
-                            toX: 20
-                            toY: 1300
-                        }
-                        FadeTransition {
-                            duration: 500
-                            fromOpacity: 1.0
-                            toOpacity: 0
-                        }
+                    TranslateTransition {
+                        duration: 500
+                        toX: -1000
+                        toY: -1000
+                    }
+                    FadeTransition {
+                        duration: 500
+                        fromOpacity: 1.0
+                        toOpacity: 0.5
                     }
                 },
                 ParallelAnimation {
-                    id: reverseAnimation
-                    ParallelAnimation {
-                        target: mainImage_top
-                        RotateTransition {
-                            toAngleZ: 0
+                    id: parallelAnimation_bottom
+                    target: mainImage_bottom
+                    RotateTransition {
+                        toAngleZ: -270
+                        duration: 500
+                    }
+                    TranslateTransition {
+                        duration: 500
+                        toX: 20
+                        toY: 1300
+                    }
+                    FadeTransition {
+                        duration: 500
+                        fromOpacity: 1.0
+                        toOpacity: 0.5
+                    }
+                },
+                ParallelAnimation {
+                    id: reverseAnimation_top
+                    target: mainImage_top
+                    RotateTransition {
+                        toAngleZ: 0
+                        duration: 500
+                    }
+                    TranslateTransition {
+                        duration: 500
+                        toX: 0
+                        toY: 0
+                    }
+                    FadeTransition {
+                        duration: 500
+                        toOpacity: 1
+                    }
+                },
+                ParallelAnimation {
+                    id: reverseAnimation_bottom
+                    target: mainImage_bottom
+                    RotateTransition {
+                        toAngleZ: 0
                             duration: 500
                         }
                         TranslateTransition {
@@ -115,23 +130,6 @@ Page {
                             toOpacity: 1
                         }
                     }
-                    ParallelAnimation {
-                        target: mainImage_bottom
-                        RotateTransition {
-                            toAngleZ: 0
-                            duration: 500
-                        }
-                        TranslateTransition {
-                            duration: 500
-                            toX: 0
-                            toY: 0
-                        }
-                        FadeTransition {
-                            duration: 500
-                            toOpacity: 1
-                        }
-                    }
-                }
             ]
             leftPadding: 200.0
             rightPadding: 200.0
