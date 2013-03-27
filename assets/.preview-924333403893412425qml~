@@ -25,8 +25,38 @@ Page {
             scalingMethod: ScalingMethod.AspectFit
             onTouch: {
                 Logic.onTouch(event);
+                sequential.play();
             }
+            animations: [
+                SequentialAnimation {
+                    id: sequential
+                    RotateTransition {
+                        toAngleZ: 10
+                        duration: 20
+                    }
+                    RotateTransition {
+                        toAngleZ: 0
+                        duration: 20
+                    }
+                    RotateTransition {
+                        toAngleZ: -10
+                        duration: 20
+                    }
+                    RotateTransition {
+                        toAngleZ: 0
+                        duration: 20
+                    }
+                }
+            ]
         }
     }
+    actions: [
+        ActionItem {
+            title: qsTr("Restart")
+            onTriggered: {
+                Logic.restart();              
+            }
+        }
+    ]
 }
 
